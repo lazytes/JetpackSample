@@ -1,0 +1,2 @@
+include ':appk', ':appj'
+rootProject.name = "Jatpack Sample"

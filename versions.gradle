@@ -1,0 +1,102 @@
+/*
+ * Copyright 2020 lazytes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * dependencies template
+ *
+ * @author lazytes
+ */
+def versions = [:]
+versions.appcompat = "1.2.0"
+versions.atsl_junit = "1.1.2"
+versions.core = "1.3.1"
+versions.espresso = "3.3.0"
+versions.fragment = "1.2.5"
+versions.junit = "4.12"
+versions.kotlin = "1.4.0"
+versions.lifecycle = "2.2.0"
+versions.reactive_streams = "1.0.3"
+ext.versions = versions
+
+def build_versions = [:]
+build_versions.min_sdk = 14
+build_versions.compile_sdk = 30
+build_versions.target_sdk = 30
+build_versions.build_tools = "30.0.2"
+ext.build_versions = build_versions
+
+def depends = [:]
+
+depends.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
+
+def atsl = [:]
+atsl.ext_junit = "androidx.test.ext:junit:$versions.atsl_junit"
+depends.atsl = atsl
+
+depends.core = "androidx.core:core:$versions.core"
+depends.core_ktx = "androidx.core:core-ktx:$versions.core"
+
+def espresso = [:]
+espresso.core = "androidx.test.espresso:espresso-core:$versions.espresso"
+depends.espresso = espresso
+
+depends.fragment = "androidx.fragment:fragment:$versions.fragment"
+depends.fragment_ktx = "androidx.fragment:fragment-ktx:$versions.fragment"
+
+depends.junit = "junit:junit:$versions.junit"
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+depends.kotlin = kotlin
+
+def lifecycle = [:]
+// all lifecycle repository
+// included by others, useless
+lifecycle.common = "androidx.lifecycle:lifecycle-common:$versions.lifecycle"
+lifecycle.common_java8 = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+// ???
+lifecycle.compiler = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+// deprecated, do not use it
+lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+lifecycle.livedata = "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle"
+// included by others, useless
+lifecycle.livedata_core = "androidx.lifecycle:lifecycle-livedata-core:$versions.lifecycle"
+// included by others, useless
+lifecycle.livedata_core_ktx = "androidx.lifecycle:lifecycle-livedata-core-ktx:$versions.lifecycle"
+lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+// included by others, useless
+lifecycle.process = "androidx.lifecycle:lifecycle-process:$versions.lifecycle"
+lifecycle.reactivestreams = "androidx.lifecycle:lifecycle-reactivestreams:$versions.lifecycle"
+lifecycle.reactivestreams_ktx = "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
+lifecycle.service = "androidx.lifecycle:lifecycle-service:$versions.lifecycle"
+lifecycle.viewmodel = "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle"
+lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+lifecycle.viewmodel_savedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
+// included by others, useless
+lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+lifecycle.runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+depends.lifecycle = lifecycle
+
+depends.reactive_streams = "org.reactivestreams:reactive-streams:$versions.reactive_streams"
+
+ext.depends = depends
+
+static def poxyRepo(RepositoryHandler handler) {
+    handler.maven { url 'https://maven.aliyun.com/repository/google' }
+    handler.maven { url 'https://maven.aliyun.com/repository/public' }
+}
+
+ext.poxyRepo = this.&poxyRepo
