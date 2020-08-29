@@ -1,9 +1,13 @@
 Android Jetpack Sample
 ======================
 
-A record for learning [jetpack][https://developer.android.google.cn/jetpack]
+A record for learning [jetpack](https://developer.android.google.cn/jetpack)
 
 ### Modules
+
+* **[appj](https://github.com/lazytes/JetpackSample/tree/master/appj)** - use jetpack with java
+
+* **[appk](https://github.com/lazytes/JetpackSample/tree/master/appk)** - use jetpack with kotlin
 
 
 License
