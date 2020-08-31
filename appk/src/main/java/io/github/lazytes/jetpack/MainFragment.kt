@@ -17,18 +17,25 @@
 package io.github.lazytes.jetpack
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import io.github.lazytes.jetpack.data.UserList
 import io.github.lazytes.jetpack.databinding.MainFragmentBinding
 import io.github.lazytes.jetpack.inject.Injection
+import kotlin.random.Random
 
 /**
+ * 使用[Fragment]来实现View层
  *
  * @author lazytes
  */
 class MainFragment : Fragment() {
-    private var binding: MainFragmentBinding? = null
+    private lateinit var binding: MainFragmentBinding
 
     // 通过fragment-ktx实现延迟加载
     private val viewModel: MainViewModel by viewModels {
@@ -41,12 +48,25 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = MainFragmentBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = MainFragmentBinding.inflate(inflater, container, false)
+
+        binding.addUser.setOnClickListener {
+            viewModel.addUser(UserList.values()[Random.nextInt(UserList.values().size)].user)
+        }
+
+        viewModel.userAdd.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
     }
 }

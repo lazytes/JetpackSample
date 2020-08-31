@@ -18,7 +18,7 @@ package io.github.lazytes.jetpack
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.github.lazytes.jetpack.data.UserRepository
+import io.github.lazytes.jetpack.data.source.UserRepository
 import java.lang.IllegalArgumentException
 
 /**

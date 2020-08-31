@@ -14,29 +14,36 @@
  * limitations under the License.
  */
 
-package io.github.lazytes.jetpack.inject
+package io.github.lazytes.jetpack.data.source
 
-import io.github.lazytes.jetpack.MainViewModelFactory
-import io.github.lazytes.jetpack.data.source.UserRepository
+import io.github.lazytes.jetpack.data.User
 import io.github.lazytes.jetpack.data.source.local.UserLocalDataSource
 import io.github.lazytes.jetpack.data.source.remote.UserRemoteDataSource
 
 /**
- * Repository和Factory应为全局变量
- *
- * 所以通过object来实现单例
- *
- * 也可通过dagger2或者dagger hilt来实现依赖注入(IOC)
+ * model层
  *
  * @author lazytes
  */
-object Injection {
+class UserRepository constructor(
+    @Local private val localDataSource: UserLocalDataSource,
+    @Remote private val remoteDataSource: UserRemoteDataSource
+) : UserDataSource {
 
-    private fun getUserRepository(): UserRepository {
-        return UserRepository(UserLocalDataSource.INSTANCE, UserRemoteDataSource.INSTANCE)
+    override fun addUser(user: User, callback: (Int) -> Unit) {
+        remoteDataSource.addUser(user) {
+            localDataSource.addUser(user) { }
+            callback.invoke(it)
+        }
     }
 
-    fun provideMainViewModelFactory(): MainViewModelFactory {
-        return MainViewModelFactory(getUserRepository())
+    override fun deleteUser(user: User) {
+        localDataSource.deleteUser(user)
+        remoteDataSource.deleteUser(user)
+    }
+
+    override fun updateAddress(address: String) {
+        localDataSource.updateAddress(address)
+        remoteDataSource.updateAddress(address)
     }
 }

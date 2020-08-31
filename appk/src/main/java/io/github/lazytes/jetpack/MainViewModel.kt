@@ -18,10 +18,10 @@ package io.github.lazytes.jetpack
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.github.lazytes.jetpack.data.UserRepository
+import io.github.lazytes.jetpack.data.User
+import io.github.lazytes.jetpack.data.source.UserRepository
 
 /**
- *
  * [ViewModel]的构造函数带参数时无法通过
  * ```
  * class MainFragment : Fragment() {
@@ -44,4 +44,9 @@ class MainViewModel(
     private val repository: UserRepository
 ) : ViewModel() {
     val user = MutableLiveData<String>()
+    val userAdd = MutableLiveData<Map<Int, String>>()
+
+    fun addUser(user: User) {
+        repository.addUser(user) { userAdd.value = mapOf(it to user.name) }
+    }
 }
